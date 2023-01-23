@@ -86,9 +86,16 @@ client
     console.log(
       `Client ready; logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})`
     );
-    setInterval(() => {
-      doQotd(freeProblems);
-    }, 15000);
+    // setInterval(() => {
+    //   doQotd(freeProblems);
+    // }, 15000);
+    client.user.setPresence({
+      status: "online",
+      activity: {
+        name: "with LeetCode",
+        type: "PLAYING",
+      },
+    });
   })
   .on("disconnect", () => {
     console.warn("Disconnected!");
@@ -133,13 +140,27 @@ client
  * @param {*} data
  * @param {*} msg
  * @param {string} diff
+ * @param {string} searchQuery
  */
-function problemType(data, msg, diff = "") {
+function problemType(data, msg, diff = "", searchQuery = "") {
   if (diff != "") {
     const filteredByDiff = data.filter(
       (problem) => problem.difficulty.toLowerCase() === diff
     );
     data = filteredByDiff;
+  }
+  if (searchQuery !== "") {
+    filteredBySearch = data.filter(function (problem) {
+      return problem.title.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+    if (filteredBySearch.length != 0) {
+      data = filteredBySearch;
+    } else {
+      msg.channel.send(
+        "Couldn't find a problem with what you gave me. Maybe try something less specific, or give up?"
+      );
+      return;
+    }
   }
   const dataLen = data.length;
   const randInt = getRandomInt(dataLen);
@@ -185,12 +206,25 @@ client.on("messageCreate", (msg) => {
     }
   }
 
+  let searchQuery = "";
+  if (
+    args.length >= 2 ||
+    args[0] != "easy" ||
+    args[0] != "medium" ||
+    args[0] != "hard"
+  ) {
+    if (args[0] == "easy" || args[0] == "medium" || args[0] == "hard")
+      args.splice(0, 1);
+    searchQuery = args.join(" ");
+    console.log(searchQuery);
+  }
+
   if (command === "info") {
     msg.channel.send(
       `Leetcode currently has a total of ${totalProblems} problems of which ${freeProblems.length} are free, and ${paidProblems.length} are paid.`
     );
   } else if (command === "problem") {
-    problemType(freeProblems, msg, diff);
+    problemType(freeProblems, msg, diff, searchQuery);
   } else if (command === "help") {
     msg.channel.send({ embeds: [helpEmbed] });
   } else {
