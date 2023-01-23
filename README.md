@@ -1,6 +1,8 @@
-# LeetCoder
+# Discord LeetCoder
 
-Originally based off [this repo](https://github.com/chakrakan/leetcode-disc) and converted to Discord.js V14 with changes to focus on providing free problems with included PoTD (problem of the day) functionality.
+Originally based off [this repo](https://github.com/chakrakan/leetcode-disc) and converted to Discord.js V14 with changes to focus on providing free problems with included PoTD (problem of the day) functionality. 
+
+Currently setup for UNSW's Computer Science and Engineering Society.
 
 ### Installation and Running Locally
 
