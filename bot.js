@@ -189,7 +189,7 @@ const helpEmbed = new EmbedBuilder()
   )
   .setTitle("Usage:")
   .setDescription(
-    "?problem (without args) - gives you a random problem of any difficulty.\n\n\t?problem <easy | medium | hard> - gives you a random problem of the specified difficulty.\n\n\t?info - returns data on leetcode problems."
+    "?problem (without args) - gives you a random problem of any difficulty.\n\n\t?problem <easy | medium | hard> <search query> - gives you a random problem of the specified difficulty and search query.\n\n\t?problem <search query> - gives you a random problem of the specified search query.\n\n\t?info - returns data on leetcode problems."
   );
 
 client.on("messageCreate", (msg) => {
