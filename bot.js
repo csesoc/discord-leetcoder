@@ -5,13 +5,11 @@ const {
   EmbedBuilder,
 } = require("discord.js");
 
-const {
-  token,
-  prefix,
-  problemUrlBase,
-  ltApiUrl,
-  qotdChannel,
-} = require("./config.json");
+const token = process.env.token;
+const prefix = process.env.prefix;
+const problemUrlBase = process.env.problemUrlBase;
+const ltApiUrl = process.env.ltApiUrl;
+const qotdChannel = process.env.qotdChannel;
 
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
