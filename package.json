@@ -1,27 +1,27 @@
 {
-  "name": "leetcode-disc",
+  "name": "discord-leetcoder",
   "version": "1.0.0",
-  "description": "Discord bot that posts a leetcode questions into chosen server as per scheduled time",
+  "description": "A discord bot in Discord.js V14 which fetches a random LeetCode problem of an optional difficulty.",
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node -r dotenv/config bot.js"
+    "start": "node bot.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chakrakan/leetcode-disc.git"
+    "url": "git+https://github.com/csesoc/discord-leetcoder.git"
   },
   "keywords": [
     "leetcode",
     "discord",
     "bot"
   ],
-  "author": "Kanisk Chakraborty",
+  "author": "Nun-u",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/chakrakan/leetcode-disc/issues"
+    "url": "https://github.com/csesoc/discord-leetcoder/issues"
   },
-  "homepage": "https://github.com/chakrakan/leetcode-disc#readme",
+  "homepage": "https://github.com/csesoc/discord-leetcoder#readme",
   "dependencies": {
     "axios": "^1.0.0",
     "discord.js": "^14.0.0"
