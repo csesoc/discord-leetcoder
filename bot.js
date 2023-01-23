@@ -13,6 +13,9 @@ const {
   qotdChannel,
 } = require("./config.json");
 
+const puppeteer = require("puppeteer");
+const cheerio = require("cheerio");
+
 const axios = require("axios");
 const client = new Client({
   intents: [
@@ -167,19 +170,36 @@ function problemType(data, msg, diff = "", searchQuery = "") {
   const randProblem = data[randInt];
   const problemUrl = problemUrlBase + randProblem.titleSlug + "/";
 
-  const embed = new EmbedBuilder()
-    .setTitle(randProblem.title)
-    .setColor("#3a76f8")
-    .setThumbnail(
-      "https://media.csesoc.org.au/content/images/2020/01/csesoc-logo-7.png"
-    )
-    .setDescription(
-      `${randProblem.difficulty} difficulty ${
-        randProblem.paidOnly ? "locked/paid" : "unlocked/free"
-      } problem.\n\nFeel free to click the title for more info!`
-    )
-    .setURL(problemUrl);
-  msg.channel.send({ embeds: [embed] });
+  const fetchFormattedDesc = async () => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(problemUrl);
+    const html = await page.content();
+    const $ = cheerio.load(html);
+    const rawString = $("._1l1MA").text();
+    const cutPoint = rawString.indexOf("Example 1");
+    const formattedDesc = rawString.substring(0, cutPoint).trim();
+    await browser.close();
+    return formattedDesc;
+  };
+
+  fetchFormattedDesc().then((formattedDesc) => {
+    const embed = new EmbedBuilder()
+      .setTitle(randProblem.title)
+      .setColor("#3a76f8")
+      .setThumbnail(
+        "https://media.csesoc.org.au/content/images/2020/01/csesoc-logo-7.png"
+      )
+      .setDescription(formattedDesc.trim())
+      .setFooter({
+        text: `${randProblem.difficulty} difficulty ${
+          randProblem.paidOnly ? "locked/paid" : "unlocked/free"
+        } problem.`,
+        iconURL: "https://leetcode.com/static/images/LeetCode_logo_rvs.png",
+      })
+      .setURL(problemUrl);
+    msg.channel.send({ embeds: [embed] });
+  });
 }
 
 const helpEmbed = new EmbedBuilder()
