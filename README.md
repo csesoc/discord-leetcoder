@@ -18,5 +18,4 @@ When your bot is online, do '?help' in the server for usage information.
 
 ### ToDo
 
-- Add search functionality, for example "linked lists" search for problems related to linked lists.
-- Find a way to display more comprehensive information about the outputted problem (if possible).
+- The core functionality of this bot will be moved to the primary CSESoc Discord Bot with future updates being pursued there.
