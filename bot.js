@@ -176,7 +176,10 @@ function problemType(data, msg, diff = "", searchQuery = "") {
     const $ = cheerio.load(html);
     const rawString = $("._1l1MA").text();
     const cutPoint = rawString.indexOf("Example 1");
-    const formattedDesc = rawString.substring(0, cutPoint).trim();
+    const formattedDesc = rawString
+      .substring(0, cutPoint)
+      .trim()
+      .replace(/\n{3,}/g, "\n");
     await browser.close();
     return formattedDesc;
   };
